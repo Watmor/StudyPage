@@ -1,0 +1,56 @@
+﻿@page
+@model IndexModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="site.css">
+    <style>
+        body{
+            background-image: url('/background/1.jpg); /* Đường dẫn đến ảnh nền */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Razor Page</h1>
+    </header>
+    <h2>Chọn nhạc và phát</h2>
+
+<div class="mb-3">
+    <label for="musicSelect" class="form-label">Chọn bài nhạc:</label>
+    <select id="musicSelect" class="form-select">
+        @foreach (var track in Model.MusicTrack)
+        {
+            <option value="@track.MusicFile">@track.Name</option>
+        }
+    </select>
+</div>
+<button class="btn btn-success" onclick="playSelectedMusic()">Start</button>
+
+<div class="mt-4">
+        <audio controls loop id="audioPlayer" controls style="width:100%; max-width:400px;">
+        <source id="audioSource" src="" type="audio/mpeg" />
+    </audio>
+</div>
+
+@section Scripts {
+<script>
+    function playSelectedMusic() {
+        var select = document.getElementById('musicSelect');
+        var selectedFile = select.value;
+        var audio = document.getElementById('audioPlayer');
+        var source = document.getElementById('audioSource');
+        // Đảm bảo đường dẫn đúng với wwwroot
+        source.src = '/' + selectedFile;
+        audio.load();
+        audio.play();
+    }
+</script>}
+</body>
+</html>
